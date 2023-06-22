@@ -33,7 +33,7 @@ class RecipeType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
-                
+
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 50]),
                     new Assert\NotBlank()
@@ -43,8 +43,9 @@ class RecipeType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'min' => 1,
-                    'max' => 1440,
+                    'max' => 1440
                 ],
+                'required' => false,
                 'label' => 'Temps de préparation (en minutes): ',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
@@ -53,13 +54,14 @@ class RecipeType extends AbstractType
                     new Assert\Positive(),
                     new Assert\LessThan(1441)
                 ]
-                ])
+            ])
             ->add('nbPeople', IntegerType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     'min' => 1,
-                    'max' => 50,
+                    'max' => 50
                 ],
+                'required' => false,
                 'label' => 'Nombre de personnes : ',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
@@ -68,14 +70,15 @@ class RecipeType extends AbstractType
                     new Assert\Positive(),
                     new Assert\LessThan(51)
                 ]
-                ])
+            ])
             ->add('difficulty', RangeType::class, [
                 'attr' => [
-                    'class' => 'form-control-range',
+                    'class' => 'form-range',
                     'id' => 'customRange1',
                     'min' => 1,
-                    'max' => 5,
+                    'max' => 5
                 ],
+                'required' => false,
                 'label' => 'Difficulté (de 1 à 5) : ',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
@@ -84,7 +87,7 @@ class RecipeType extends AbstractType
                     new Assert\Positive(),
                     new Assert\LessThan(5)
                 ]
-                ])
+            ])
             ->add('description', TextareaType::class, [
                 'attr' => [
                     'class' => 'form-control',
@@ -95,7 +98,7 @@ class RecipeType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
-                
+
                 'constraints' => [
                     new Assert\NotBlank()
                 ]
@@ -103,8 +106,8 @@ class RecipeType extends AbstractType
             ->add('price', MoneyType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Prix'
                 ],
+                'required' => false,
                 'label' => 'Prix de l\'ingrédient : ',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
@@ -113,48 +116,40 @@ class RecipeType extends AbstractType
                     new Assert\Positive(),
                     new Assert\LessThan(1001)
                 ]
-                ])
+            ])
             ->add('isFavorite', CheckboxType::class, [
                 'attr' => [
-                    'class' => 'form-check-input',
-                    'type' => "checkbox"
+                    'class' => 'form-check-input mx-2',
                 ],
+                'required' => false,
                 'label' => 'Favori ? ',
                 'label_attr' => [
                     'class' => 'form-check-label',
-                    "id" => "flexCheckDefault"
                 ],
                 'constraints' => [
                     new Assert\NotNull()
                 ]
-                ])
+            ])
             ->add('ingredients', EntityType::class, [
-                'attr' => [
-                    'class' => 'form-check-input',
-                ],
-                'label' => 'Ingrédients : ',
-                'label_attr' => [
-                    'class' => 'form-check-label'
-                ],
                 'class' => Ingredient::class,
                 'query_builder' => function (IngredientRepository $r) {
                     return $r->createQueryBuilder('i')
                         ->orderBy('i.name', 'ASC');
                 },
+                'label' => 'Les ingredients :',
+                'label_attr' => [
+                    'class' => 'form-check-label mt-4',
+                ],
                 'choice_label' => 'name',
                 'multiple' => true,
-                'expanded' => true,
-                'constraints' => [
-                    new Assert\NotNull()
-                ]
-                ])
-                ->add('submit', SubmitType::class, [
-                    'attr' => [
-                        'class' => 'btn btn-primary mt-5'
-                    ],
-                    'label' => 'Ajouter'
-                    ]);
-        ;
+                'expanded' => true
+            ])
+            ->add('submit', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-primary my-5'
+                ],
+                'label' => 'Valider'
+            ]);;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
