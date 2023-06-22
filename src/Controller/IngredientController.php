@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class IngredientController extends AbstractController
 {
     /**
-     *  Fonction qui affiche tout les ingredients
+     *  Methode qui affiche tout les ingredients
      * 
      * @param IngredientRepository $repository
      * @return PaginatorInterface $paginator
@@ -45,7 +45,7 @@ class IngredientController extends AbstractController
     }
 
     /**
-     * Fonction qui affiche un ingredient
+     * Methode qui ajoute un ingredient
      * 
      * @param Ingredient $ingredient
      * @return Response
@@ -80,6 +80,12 @@ class IngredientController extends AbstractController
         ]);
     }
 
+    /**
+     * Methode qui edite un ingredient
+     * 
+     * @param Ingredient $ingredient
+     * @return Response
+     */
     #[Route('/ingredient/edition/{id}', name: 'ingredient.edit', methods: ['GET', 'POST'])]
     public function edit(IngredientRepository $repository, 
         int $id,
@@ -112,6 +118,12 @@ class IngredientController extends AbstractController
         ]);
     }
 
+    /**
+     * Methode qui supprime un ingredient
+     * 
+     * @param Ingredient $ingredient
+     * @return Response
+     */
     #[Route('/ingredient/suppression/{id}', name: 'ingredient.delete', methods: ['GET'])]
     public function delete(
         IngredientRepository $repository,
